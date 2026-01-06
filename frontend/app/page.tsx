@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
+import { useRouter } from "next/navigation";
 import {
   Leaf,
   ArrowRight,
@@ -27,6 +28,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import WeatherWidget from "@/components/WeatherWidget";
 
 export default function LandingPage() {
+  const router = useRouter();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const { t } = useLanguage();
   const containerVariants: Variants = {
@@ -149,12 +151,12 @@ export default function LandingPage() {
               {t("hero_subtitle")}
             </motion.p>
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Link href={isAuthenticated ? "/marketplace" : "/register"} className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white text-lg font-bold rounded-2xl shadow-xl shadow-emerald-500/20 hover:scale-105 transition-all flex items-center justify-center gap-2 group text-center">
-                {isAuthenticated ? t("hero_cta_marketplace") : t("hero_cta_start")}
+              <Link href={isAuthenticated ? "/smart-advisor" : "/register"} className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white text-lg font-bold rounded-2xl shadow-xl shadow-emerald-500/20 hover:scale-105 transition-all flex items-center justify-center gap-2 group text-center">
+                {isAuthenticated ? t("smart_farming") : t("hero_cta_start")}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link href="/marketplace" className="px-8 py-4 glass text-gray-900 dark:text-white text-lg font-bold rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all text-center">
-                {t("hero_cta_explore")}
+              <Link href="/farmer-network" className="px-8 py-4 glass text-gray-900 dark:text-white text-lg font-bold rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all text-center">
+                {t("hero_cta_community")}
               </Link>
             </motion.div>
 
@@ -264,7 +266,7 @@ export default function LandingPage() {
       </section >
 
       {/* How it Works */}
-      < section className="py-32 px-4 sm:px-6 lg:px-8" >
+    {! isAuthenticated && (  < section className="py-32 px-4 sm:px-6 lg:px-8" >
         <div className="max-w-7xl mx-auto">
           <div className="bg-emerald-600 rounded-[4rem] p-12 lg:p-24 relative overflow-hidden shadow-2xl shadow-emerald-500/20">
             <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
@@ -289,7 +291,8 @@ export default function LandingPage() {
                     </motion.div>
                   ))}
                 </div>
-                <button className="mt-16 px-10 py-5 bg-white text-emerald-600 text-lg font-black rounded-2xl hover:scale-105 transition-transform">
+                <button className="mt-16 px-10 py-5 bg-white text-emerald-600 text-lg font-black rounded-2xl hover:scale-105 transition-transform"
+                onClick={() => router.push("/register")}>
                   Join the Revolution
                 </button>
               </div>
@@ -310,7 +313,7 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-      </section >
+      </section >)}
 
 
       {/* Footer */}

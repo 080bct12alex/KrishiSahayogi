@@ -16,7 +16,8 @@ export const translations = {
         hero_subtitle: "Empowering farmers with AI-driven insights, disease detection, and a direct-to-consumer marketplace. Grow more, sell better.",
         hero_cta_marketplace: "Go to Marketplace",
         hero_cta_start: "Start Farming Smarter",
-        hero_cta_explore: "Explore Features",
+        hero_cta_community: "Explore Community",
+        smart_farming: "Smart Farming",
 
         // Farmer Network
         network_header_badge: "Global Network",
@@ -117,7 +118,8 @@ export const translations = {
         hero_subtitle: "AI-संचालित अन्तर्दृष्टि, रोग पहिचान, र प्रत्यक्ष-उपभोक्ता बजारको साथ किसानहरूलाई सशक्त बनाउँदै। धेरै उब्जाउनुहोस्, राम्रो बेच्नुहोस्।",
         hero_cta_marketplace: "बजारमा जानुहोस्",
         hero_cta_start: "होसियारीपूर्वक खेती सुरु गर्नुहोस्",
-        hero_cta_explore: "सुविधाहरू अन्वेषण गर्नुहोस्",
+        hero_cta_community: "समुदाय नेटवर्कमा जानुहोस्",
+        smart_farming: "स्मार्ट खेती",
 
         // Farmer Network
         network_header_badge: "ग्लोबल नेटवर्क",
