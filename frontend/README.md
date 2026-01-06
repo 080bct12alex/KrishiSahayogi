@@ -2,14 +2,14 @@
 
 The web interface for Krishi Sahayogi, built with **Next.js 14**. It offers a responsive, accessible, and fast experience for farmers and buyers.
 
-## 🌟 Features
+##  Features
 
 *   **Responsive Design:** Works seamlessly on mobile and desktop.
 *   **PWA Ready:** can be installed as an app.
 *   **Localization:** Instant English <-> Nepali switching.
 *   **Visualizations:** Interactive charts for market prices.
 
-## 🛠️ Setup & Installation
+##  Setup & Installation
 
 1.  Navigate to the directory:
     ```bash
@@ -33,7 +33,7 @@ The web interface for Krishi Sahayogi, built with **Next.js 14**. It offers a re
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-## 📦 Key Libraries
+## Key Libraries
 
 *   `next`: React Framework
 *   `tailwindcss`: Styling

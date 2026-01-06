@@ -2,7 +2,7 @@
 
 The brain of Krishi Sahayogi. A Python/Flask server hosting machine learning models for predictions and Google Gemini for generative advice.
 
-## 🧠 Models & Logic
+##  Models & Logic
 
 1.  **Crop Recommendation:**
     *   **Algorithm:** Random Forest Classifier
@@ -28,7 +28,7 @@ The brain of Krishi Sahayogi. A Python/Flask server hosting machine learning mod
     *   **Engine:** Google Gemini Pro
     *   **Function:** Generates cures and planting advice in natural language.
 
-## 🛠️ Setup & Installation
+##  Setup & Installation
 
 1.  Navigate to the directory:
     ```bash

@@ -2,13 +2,13 @@
 
 The native mobile experience for Krishi Sahayogi, built with **React Native (Expo)**.
 
-## 📱 Features
+##  Features
 
 *   **On-the-go Access:** Farming tools in your pocket.
 *   **Camera Integration:** Native camera access for easier leaf scanning.
 *   **Offline First:** Caches key dat for use in fields with poor connectivity.
 
-## 🛠️ Setup & Installation
+## Setup & Installation
 
 1.  Navigate to the directory:
     ```bash
@@ -26,7 +26,7 @@ The native mobile experience for Krishi Sahayogi, built with **React Native (Exp
     *   Scan the QR code with the **Expo Go** app (Android/iOS).
     *   Or run on emulator: `a` (Android) / `i` (iOS).
 
-## 📦 Key Libraries
+## Key Libraries
 
 *   `expo`: Framework
 *   `react-navigation`: Routing

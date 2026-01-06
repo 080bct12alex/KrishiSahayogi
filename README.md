@@ -2,7 +2,7 @@
 
 **Krishi Sahayogi** is a comprehensive AI-powered agricultural platform designed to empower Nepali farmers. It bridges the gap between traditional farming and modern technology by providing real-time data, expert advice, and direct market access.
 
-## 🚀 Key Features
+##  Key Features
 
 *   **Smart Farming Advisor:** Optimized crop and fertilizer recommendations using ML (Random Forest).
 *   **Disease Detection:** Instant plant disease identification using Computer Vision (ResNet9) with Gemini-powered cure suggestions.
@@ -11,7 +11,7 @@
 *   **Networking:** A community platform for farmers to share knowledge.
 *   **Multilingual:** Full support for English and Nepali.
 
-## 📂 Project Structure
+##  Project Structure
 
 Verified ecosystem containing:
 
@@ -20,14 +20,14 @@ Verified ecosystem containing:
 *   **[`/models`](./models):** Python/Flask AI microservice hosting ML models and Gemini integration.
 *   **[`/mobile`](./mobile):** React Native mobile application for on-the-go access.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 *   **Frontend:** Next.js, Tailwind CSS, Redux Toolkit, Framer Motion
 *   **Backend:** Node.js, Express, MongoDB (assumed)
 *   **AI/ML:** Python, Flask, PyTorch, Scikit-Learn, XGBoost, Google Gemini API
 *   **Mobile:** React Native (Expo)
 
-## 🏃‍♂️ Quick Start
+##  Quick Start
 
 To run the entire ecosystem locally:
 
@@ -36,6 +36,9 @@ To run the entire ecosystem locally:
 3.  **Frontend:** `cd frontend` -> `npm install` -> `npm run dev`
 4.  **Mobile:** `cd mobile` -> `npm install` -> `npm start`
 
-## 🤝 Team DIMA
+##  Team DIMA
 
-Built with ❤️ for the future of Nepal's Agriculture.
+- Darpan Giri
+- Ishan Gautam
+- Mahesh Bhandari
+- Alex Shrestha

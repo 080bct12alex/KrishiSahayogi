@@ -2,13 +2,13 @@
 
 The central API server for Krishi Sahayogi, built with **Node.js** and **Express**. It handles user authentication, marketplace transactions, and community forum data.
 
-## 🚀 Capabilities
+## Capabilities
 
 *   **Auth:** secure JWT-based authentication.
 *   **Marketplace:** CRUD operations for agricultural listings.
 *   **Proxy:** securely routes requests to the Python AI server if needed.
 
-## 🛠️ Setup & Installation
+## Setup & Installation
 
 1.  Navigate to the directory:
     ```bash
@@ -29,7 +29,7 @@ The central API server for Krishi Sahayogi, built with **Node.js** and **Express
     npm run dev
     ```
 
-## 🔗 API Endpoints (Snapshot)
+## API Endpoints (Snapshot)
 
 *   `POST /api/auth/register`: Register new user
 *   `POST /api/auth/login`: Login
