@@ -175,7 +175,6 @@ def get_disease_solution_endpoint():
 def predict_price_endpoint():
     try:
         data = request.get_json()
-        
         if 'commodity' not in data or 'date' not in data:
             return jsonify({
                 'success': False,
@@ -186,7 +185,6 @@ def predict_price_endpoint():
             commodity=data['commodity'],
             date_str=data['date']
         )
-        
         return jsonify({
             'success': True,
             **result

@@ -127,7 +127,6 @@ def predict_price(commodity, date_str):
     model, encoder = load_price_model()
     
     try:
-        # 1. Parse the date
         date_obj = datetime.strptime(date_str, '%Y-%m-%d')
         month = date_obj.month
         year = date_obj.year
@@ -136,7 +135,7 @@ def predict_price(commodity, date_str):
         # Passing as a DataFrame to avoid "UserWarning: X does not have valid feature names"
         comm_df = pd.DataFrame({'Commodity': [commodity]})
         encoded_output = encoder.transform(comm_df[['Commodity']])
-        
+        print(encoded_output)
         # Convert encoded output to a single numeric value safely
         if hasattr(encoded_output, "toarray"):
             # Handles Sparse Matrices (OneHotEncoder)
@@ -164,7 +163,7 @@ def predict_price(commodity, date_str):
         # print(prediction)
         predicted_price = float(np.expm1(prediction[0]))
         predicted_price = np.round(predicted_price)
-        
+        print(predicted_price)
         return {
             'commodity': commodity,
             'date': date_str,
