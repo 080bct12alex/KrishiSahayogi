@@ -1,5 +1,5 @@
 import express from 'express';
-import { predictCrop, predictFertilizer } from '../controllers/ml.controller.js';
+import { predictCrop, predictFertilizer, predictPrice } from '../controllers/ml.controller.js';
 
 const router = express.Router();
 
@@ -8,5 +8,8 @@ router.post('/predict-crop', predictCrop);
 
 // POST /api/v1/ml/predict-fertilizer - Predict fertilizer recommendation
 router.post('/predict-fertilizer', predictFertilizer);
+
+// POST /api/v1/ml/predict-price - Predict commodity price
+router.post('/predict-price', predictPrice);
 
 export default router;

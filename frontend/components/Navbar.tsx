@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ShoppingCart, Leaf, Brain, BookOpen, LogOut, User, Users, Sun, Moon, ChevronDown, Microscope, BarChart3, FileText } from "lucide-react";
+import { Menu, X, ShoppingCart, Leaf, Brain, BookOpen, LogOut, User, Users, Sun, Moon, ChevronDown, Microscope, BarChart3, FileText, Sparkles } from "lucide-react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
@@ -48,6 +48,7 @@ export default function Navbar() {
       icon: Brain,
       isDropdown: true,
       features: [
+        { name: "Smart Advisor", href: "/smart-advisor", icon: Sparkles, color: "text-purple-500", highlight: true },
         { name: t("fertilizer_prediction"), href: "/fertilizer-prediction", icon: Leaf, color: "text-emerald-500" },
         { name: t("crop_recommendation"), href: "/crop-recommendation", icon: Brain, color: "text-green-500" },
         { name: t("disease_detection"), href: "/disease-detection", icon: Microscope, color: "text-teal-500" },
@@ -123,7 +124,7 @@ export default function Navbar() {
                               </div>
                               <div>
                                 <p className="text-sm font-black text-gray-900 dark:text-white">{feature.name}</p>
-                                
+
                               </div>
                             </Link>
                           ))}

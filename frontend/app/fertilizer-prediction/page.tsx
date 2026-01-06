@@ -12,10 +12,27 @@ import axios from "axios";
 import SoilQuestionnaire from "@/components/SoilQuestionnaire";
 import CompactResultModal from "@/components/CompactResultModal";
 
-const ML_API_URL = "http://localhost:5000";
+const BACKEND_URL = "http://localhost:7000/api/v1";
 
 const SOIL_TYPES = ['Sandy', 'Loamy', 'Black', 'Red', 'Clayey'];
 const CROP_TYPES = ['Maize', 'Sugarcane', 'Cotton', 'Tobacco', 'Paddy', 'Barley', 'Wheat', 'Millets', 'Oil seeds', 'Pulses', 'Ground Nuts'];
+
+const normalizeNPKForFertilizer = (n: number, p: number, k: number) => {
+    const scaleValue = (value: number, fromMin: number, fromMax: number, toMin: number, toMax: number): number => {
+        const clampedValue = Math.max(fromMin, Math.min(fromMax, value));
+        const scaled = ((clampedValue - fromMin) / (fromMax - fromMin)) * (toMax - toMin) + toMin;
+        return Math.round(scaled * 10) / 10;
+    };
+
+    return {
+        // Nitrogen: scale from typical crop range (0-140) to fertilizer range (4-42)
+        nitrogen: scaleValue(n, 0, 140, 4, 42),
+        // Phosphorus: scale from typical crop range (5-145) to fertilizer range (0-42)
+        phosphorus: scaleValue(p, 5, 145, 0, 42),
+        // Potassium: scale from typical crop range (5-205) to fertilizer range (0-19)
+        potassium: scaleValue(k, 5, 205, 0, 19)
+    };
+};
 
 export default function FertilizerPredictionPage() {
     const [loading, setLoading] = useState(false);
@@ -26,48 +43,39 @@ export default function FertilizerPredictionPage() {
     const [weather, setWeather] = useState<any>(null);
     const [locationName, setLocationName] = useState("Detecting location...");
 
-    // Form State
+    // Form and Questionnaire States
     const [fertiForm, setFertiForm] = useState({
-        Temperature: "", Humidity: "", Moisture: "", Soil_Type: "Sandy", Crop_Type: "Maize",
-        Nitrogen: "", Potassium: "", Phosphorous: ""
+        Nitrogen: "",
+        Phosphorous: "",
+        Potassium: "",
+        Temperature: "",
+        Humidity: "",
+        Moisture: "",
+        Soil_Type: "Loamy",
+        Crop_Type: "Maize"
     });
-
-    // Location auto-fill states
-    const [locationFetching, setLocationFetching] = useState(false);
-    const [locationCoords, setLocationCoords] = useState<{ lat: number; lon: number } | null>(null);
-
-    // Questionnaire states
     const [showQuestionnaire, setShowQuestionnaire] = useState(false);
-
-    // AI Tips states
-    const [aiTips, setAiTips] = useState<string[]>([]);
-    const [loadingTips, setLoadingTips] = useState(false);
-    const [showResultModal, setShowResultModal] = useState(false);
+    const [locationFetching, setLocationFetching] = useState(false);
 
     useEffect(() => {
+        // ... (existing useEffect for weather/location)
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(async (position) => {
                 const { latitude, longitude } = position.coords;
                 try {
                     const res = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=relative_humidity_2m`);
                     const current = res.data.current_weather;
-
                     setWeather({
                         temp: current.temperature,
                         condition: getConditionText(current.weathercode),
                         humidity: res.data.hourly.relative_humidity_2m[0]
                     });
-
                     const geoRes = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
                     setLocationName(geoRes.data.address.city || geoRes.data.address.town || geoRes.data.address.village || "Your Farm");
                 } catch (err) {
-                    console.error("Weather fetch failed", err);
                     setLocationName("Location detected");
                 }
-            }, (err) => {
-                console.error("Geolocation error", err);
-                setLocationName("Location access denied");
-            });
+            }, () => setLocationName("Location access denied"));
         }
     }, []);
 
@@ -83,59 +91,47 @@ export default function FertilizerPredictionPage() {
 
     const handleUseLocation = async () => {
         if (!("geolocation" in navigator)) {
-            setError("Geolocation is not supported by your browser");
+            setError("Geolocation is not supported");
             return;
         }
-
         setLocationFetching(true);
         setError(null);
 
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 const { latitude, longitude } = position.coords;
-                setLocationCoords({ lat: latitude, lon: longitude });
-
                 try {
-                    const response = await axios.get(
-                        `http://localhost:7000/api/v1/location/data?lat=${latitude}&lon=${longitude}`
-                    );
-
+                    const response = await axios.get(`${BACKEND_URL}/location/data?lat=${latitude}&lon=${longitude}`);
                     if (response.data.success) {
                         const { weather, location } = response.data;
-
-                        // Auto-fill only weather-related fields
-                        // NPK should be filled via questionnaire or manual entry
-                        setFertiForm({
-                            ...fertiForm,
+                        setFertiForm(prev => ({
+                            ...prev,
                             Temperature: weather.temperature.toString(),
                             Humidity: weather.humidity.toString(),
-                            Moisture: weather.soilMoisture.toString()
-                        });
-
+                            Moisture: weather.soilMoisture?.toString() || "50"
+                        }));
                         setLocationName(location.name);
                     }
-                } catch (err: any) {
-                    console.error("Failed to fetch location data:", err);
-                    setError("Failed to fetch environmental data. Please try again or enter values manually.");
+                } catch (err) {
+                    setError("Failed to fetch environmental data");
                 } finally {
                     setLocationFetching(false);
                 }
             },
-            (err) => {
-                console.error("Geolocation error:", err);
+            () => {
                 setLocationFetching(false);
-                setError("Location access denied. Please enable location permissions or enter values manually.");
+                setError("Location access denied");
             }
         );
     };
 
     const handleQuestionnaireComplete = (values: { N: number; P: number; K: number; pH: number }) => {
-        setFertiForm({
-            ...fertiForm,
+        setFertiForm(prev => ({
+            ...prev,
             Nitrogen: values.N.toString(),
-            Potassium: values.K.toString(),
-            Phosphorous: values.P.toString()
-        });
+            Phosphorous: values.P.toString(),
+            Potassium: values.K.toString()
+        }));
         setShowQuestionnaire(false);
     };
 
@@ -145,17 +141,24 @@ export default function FertilizerPredictionPage() {
         setError(null);
         setResult(null);
         try {
+            // Normalize NPK values
+            const normalizedNPK = normalizeNPKForFertilizer(
+                Number(fertiForm.Nitrogen),
+                Number(fertiForm.Phosphorous),
+                Number(fertiForm.Potassium)
+            );
+
             const payload = {
                 temp: Number(fertiForm.Temperature),
                 humidity: Number(fertiForm.Humidity),
                 moisture: Number(fertiForm.Moisture),
                 soil_type: fertiForm.Soil_Type,
                 crop_type: fertiForm.Crop_Type,
-                nitrogen: Number(fertiForm.Nitrogen),
-                potassium: Number(fertiForm.Potassium),
-                phosphorus: Number(fertiForm.Phosphorous)
+                nitrogen: normalizedNPK.nitrogen,
+                potassium: normalizedNPK.potassium,
+                phosphorus: normalizedNPK.phosphorus
             };
-            const res = await axios.post(`${ML_API_URL}/predict_fertilizer`, payload);
+            const res = await axios.post(`${BACKEND_URL}/ml/predict-fertilizer`, payload);
             setResult(res.data);
         } catch (err: any) {
             setError(err.response?.data?.message || "Failed to get fertilizer prediction. Make sure ML server is running.");

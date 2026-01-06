@@ -79,3 +79,39 @@ export const predictFertilizer = async (req, res) => {
         });
     }
 };
+
+/**
+ * Proxy price prediction request to Python ML server
+ */
+export const predictPrice = async (req, res) => {
+    try {
+        const { commodity, date } = req.body;
+
+        // Validate required fields
+        if (!commodity || !date) {
+            return res.status(400).json({
+                success: false,
+                error: 'Missing required fields: commodity and date'
+            });
+        }
+
+        // Forward request to Python server
+        const response = await axios.post(
+            `${PYTHON_SERVER_URL}/predict_price`,
+            { commodity, date }
+        );
+
+        res.json(response.data);
+    } catch (error) {
+        console.error('Price prediction error:', error);
+
+        if (error.response) {
+            return res.status(error.response.status).json(error.response.data);
+        }
+
+        res.status(500).json({
+            success: false,
+            error: 'Failed to predict price. Please ensure the Python server is running.'
+        });
+    }
+};
