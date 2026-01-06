@@ -1,0 +1,71 @@
+DEBUGGING PRICE PREDICTION
+Loading model from C:\Users\isang\Desktop\New folder (2)\new\new\KrishiSahayogi\models\models\xgboost_price_model_updated.pkl
+Loading encoder from C:\Users\isang\Desktop\New folder (2)\new\new\KrishiSahayogi\models\models\commodity_target_encoder_updated.pkl
+✓ Models loaded
+Model expects features (sklearn): ['year' 'month' 'Commodity_enc']
+
+
+=== COMMODITY: Tomato Big(Nepali) ===
+
+--- Testing: Tomato Big(Nepali) on 2018-03-15 ---
+Raw Model Prediction: -0.144884392619133
+current_logic_price: -0.13487769663333893
+HYPOTHESIS_PRICE: 42.52288083177052
+
+--- Testing: Tomato Big(Nepali) on 2020-03-15 ---
+Raw Model Prediction: 0.09272103756666183
+current_logic_price: 0.0971556305885315
+HYPOTHESIS_PRICE: 54.1960959989706
+
+--- Testing: Tomato Big(Nepali) on 2022-03-15 ---
+Raw Model Prediction: 0.11922701448202133
+current_logic_price: 0.1266256421804428
+HYPOTHESIS_PRICE: 55.6786843714933
+
+--- Testing: Tomato Big(Nepali) on 2023-03-15 ---
+Raw Model Prediction: 0.2066911906003952
+current_logic_price: 0.22960279881954193
+HYPOTHESIS_PRICE: 60.859295536295164
+
+--- Testing: Tomato Big(Nepali) on 2024-03-15 ---
+Raw Model Prediction: 0.2066911906003952
+current_logic_price: 0.22960279881954193
+HYPOTHESIS_PRICE: 60.859295536295164
+
+--- Testing: Tomato Big(Nepali) on 2025-03-15 ---
+Raw Model Prediction: 0.2066911906003952
+current_logic_price: 0.22960279881954193
+HYPOTHESIS_PRICE: 60.859295536295164
+
+
+=== COMMODITY: Potato Red ===
+
+--- Testing: Potato Red on 2018-04-10 ---
+Raw Model Prediction: -0.40765485167503357
+current_logic_price: -0.3347915709018707
+HYPOTHESIS_PRICE: 23.07511031935034
+
+--- Testing: Potato Red on 2020-04-10 ---
+Raw Model Prediction: -0.3523758351802826
+current_logic_price: -0.29698413610458374
+HYPOTHESIS_PRICE: 24.443430001544208
+
+--- Testing: Potato Red on 2022-04-10 ---
+Raw Model Prediction: -0.23095569014549255
+current_logic_price: -0.20622536540031433
+HYPOTHESIS_PRICE: 27.728156412874426
+
+--- Testing: Potato Red on 2023-04-10 ---
+Raw Model Prediction: -0.4041566252708435
+current_logic_price: -0.3324604332447052
+HYPOTHESIS_PRICE: 23.159477988519207
+
+--- Testing: Potato Red on 2024-04-10 ---
+Raw Model Prediction: -0.4041566252708435
+current_logic_price: -0.3324604332447052
+HYPOTHESIS_PRICE: 23.159477988519207
+
+--- Testing: Potato Red on 2025-04-10 ---
+Raw Model Prediction: -0.4041566252708435
+current_logic_price: -0.3324604332447052
+HYPOTHESIS_PRICE: 23.159477988519207

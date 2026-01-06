@@ -1,120 +1,55 @@
-# Flask Crop Recommendation API
+# Krishi Sahayogi - AI Microservice
 
-## Setup Instructions
+The brain of Krishi Sahayogi. A Python/Flask server hosting machine learning models for predictions and Google Gemini for generative advice.
 
-### 1. **Activate Virtual Environment**
-```bash
-# On Windows
-.\venv\Scripts\activate
+## 🧠 Models & Logic
 
-# You should see (venv) in your terminal
-```
+1.  **Crop Recommendation:**
+    *   **Algorithm:** Random Forest Classifier
+    *   **Input:** N, P, K, Temperature, Humidity, pH, Rainfall
+    *   **Output:** Best crop to plant (e.g., Rice, Maize)
 
-### 2. **Install Dependencies**
-```bash
-pip install flask flask-cors joblib scikit-learn numpy pandas
-```
+2.  **Fertilizer Recommendation:**
+    *   **Algorithm:** Random Forest Classifier
+    *   **Input:** Soil params + Crop Type
+    *   **Output:** Fertilizer name (e.g., Urea, DAP)
 
-### 3. **Run the Flask API**
+3.  **Disease Detection:**
+    *   **Algorithm:** Custom ResNet9 (PyTorch)
+    *   **Input:** Leaf Image
+    *   **Output:** Disease Name + Confidence
 
-**Method 1: Using Python directly (Recommended)**
-```bash
-python app.py
-```
+4.  **Price Prediction:**
+    *   **Algorithm:** XGBoost Regressor
+    *   **Input:** Commodity Name, Date
+    *   **Output:** Predicted Price (NPR/kg)
 
-**Method 2: Using Flask CLI**
-```bash
-flask run
-```
+5.  **Smart Advice (Dr. AI):**
+    *   **Engine:** Google Gemini Pro
+    *   **Function:** Generates cures and planting advice in natural language.
 
-The API will start on `http://127.0.0.1:5000/`
+## 🛠️ Setup & Installation
 
-## API Endpoints
+1.  Navigate to the directory:
+    ```bash
+    cd models
+    ```
+2.  Create a virtual environment (optional but recommended):
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # Windows: venv\Scripts\activate
+    ```
+3.  Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+4.  Set up Environment Variables (`.env`):
+    ```env
+    GEMINI_API_KEY=your_google_ai_key
+    ```
+5.  Run the server:
+    ```bash
+    python app.py
+    ```
 
-### Health Check
-- **URL**: `GET /`
-- **Response**:
-```json
-{
-  "status": "running",
-  "message": "Crop Recommendation API is running"
-}
-```
-
-### Predict Crop
-- **URL**: `POST /predict_crop`
-- **Headers**: `Content-Type: application/json`
-- **Body**:
-```json
-{
-  "n": 90,
-  "p": 42,
-  "k": 43,
-  "temp": 20.5,
-  "humidity": 82.0,
-  "ph": 6.5,
-  "rainfall": 202.9
-}
-```
-- **Success Response**:
-```json
-{
-  "success": true,
-  "crop": "rice"
-}
-```
-- **Error Response** (if model not found):
-```json
-{
-  "success": false,
-  "error": "Model file not found. Please train and save the model first."
-}
-```
-
-## Testing the API
-
-### Using cURL:
-```bash
-curl -X POST http://127.0.0.1:5000/predict_crop \
-  -H "Content-Type: application/json" \
-  -d "{\"n\":90,\"p\":42,\"k\":43,\"temp\":20.5,\"humidity\":82,\"ph\":6.5,\"rainfall\":202.9}"
-```
-
-### Using PowerShell:
-```powershell
-$body = @{
-    n = 90
-    p = 42
-    k = 43
-    temp = 20.5
-    humidity = 82
-    ph = 6.5
-    rainfall = 202.9
-} | ConvertTo-Json
-
-Invoke-RestMethod -Uri http://127.0.0.1:5000/predict_crop -Method Post -Body $body -ContentType "application/json"
-```
-
-### Using Postman or Insomnia:
-1. Set method to `POST`
-2. URL: `http://127.0.0.1:5000/predict_crop`
-3. Headers: `Content-Type: application/json`
-4. Body (raw JSON): Copy the example JSON above
-
-## Important Notes
-
-⚠️ **Model File Required**: You need to have a trained model saved as `crop_recommendation_model.joblib` in the same directory as `app.py`.
-
-If you don't have the model yet, you need to:
-1. Train your crop recommendation model
-2. Save it using: `joblib.dump(model, 'crop_recommendation_model.joblib')`
-
-## Parameters Explanation
-
-- **n**: Nitrogen content ratio in soil
-- **p**: Phosphorus content ratio in soil
-- **k**: Potassium content ratio in soil
-- **temp**: Temperature in degree Celsius
-- **humidity**: Relative humidity in %
-- **ph**: pH value of the soil
-- **rainfall**: Rainfall in mm
+Server runs on `http://localhost:5000` by default.
